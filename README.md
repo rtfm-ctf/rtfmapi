@@ -106,5 +106,6 @@ Example output:
 ```
 
 ## Credits
+- [Kamus Hadenes](https://github.com/kamushadenes) (Author)
 - [RTFM](http://www.rtfm-ctf.org/)
 - [Gambler](https://github.com/mthbernardes)
