@@ -11,7 +11,6 @@ from rtfmapi.providers.captcha import Captcha
 from rtfmapi.validators.cpf import CPF
 from rtfmapi.config import ConfigSectionMap
 import json
-
 import hug
 
 class QueryCPF(object):
@@ -98,7 +97,7 @@ class QueryCPF(object):
         return obj
 
 
-@hug.post('/', output=hug.output_format.json)
+@hug.post('/query/cpf', output=hug.output_format.json)
 def query_cpf(cpf:str, birth:str):
     '''Queries a CPF at Receita Federal'''
     qc = QueryCPF()
