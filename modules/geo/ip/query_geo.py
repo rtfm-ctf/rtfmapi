@@ -71,11 +71,6 @@ class GeoIP(object):
 
         return self.__dict__()
 
-@hug.post('/query/ip/geo')
-def query_ip_geo_api(ip):
-    geo = GeoIP(ip)
-
-    return geo.get_info()
 
 if __name__ == '__main__':
     geo = GeoIP('173.194.115.73')

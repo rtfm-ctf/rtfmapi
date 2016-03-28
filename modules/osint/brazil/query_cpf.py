@@ -97,11 +97,6 @@ class QueryCPF(object):
         return obj
 
 
-@hug.post('/query/cpf', output=hug.output_format.json)
-def query_cpf(cpf:str, birth:str):
-    '''Queries a CPF at Receita Federal'''
-    qc = QueryCPF()
-    return qc.query(cpf, birth)
 
 
 if __name__ == '__main__':
